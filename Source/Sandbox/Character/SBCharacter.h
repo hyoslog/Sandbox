@@ -7,11 +7,11 @@
 
 // ThirdParty
 
-// Plugin
-
 // Engine
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
+
+// Plugin
 
 // Game
 
@@ -43,20 +43,21 @@ protected:
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
-	class USpringArmComponent* CameraBoom;
+	class USpringArmComponent* CameraBoom = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
-	class UCameraComponent* FollowCamera;
+	class UCameraComponent* FollowCamera = nullptr;
+
+protected:
+	UPROPERTY(EditAnywhere, Category="Input")
+	class UInputAction* JumpAction = nullptr;
 
 	UPROPERTY(EditAnywhere, Category="Input")
-	class UInputAction* JumpAction;
+	class UInputAction* MoveAction = nullptr;
 
 	UPROPERTY(EditAnywhere, Category="Input")
-	class UInputAction* MoveAction;
+	class UInputAction* LookAction = nullptr;
 
 	UPROPERTY(EditAnywhere, Category="Input")
-	class UInputAction* LookAction;
-
-	UPROPERTY(EditAnywhere, Category="Input")
-	class UInputAction* MouseLookAction;
+	class UInputAction* MouseLookAction = nullptr;
 };
