@@ -19,8 +19,11 @@ public class Sandbox : ModuleRules
 			"GameplayStateTreeModule",
 			"UMG",
 			"Slate",
-			"MotionWarping"
-		});
+			"MotionWarping",
+            "GameplayAbilities",
+			"GameplayTags",
+			"GameplayTasks"
+        });
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });
 
