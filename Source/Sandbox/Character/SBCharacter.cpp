@@ -19,6 +19,7 @@
 // Plugin
 
 // Game
+#include "Player/SBPlayerState.h"
 
 ASBCharacter::ASBCharacter()
 {
@@ -78,6 +79,36 @@ void ASBCharacter::SetupPlayerInputComponent(UInputComponent* InPlayerInputCompo
 	EnhancedInputComp->BindAction(MouseLookAction, ETriggerEvent::Triggered, this, &ASBCharacter::OnLook);
 	ensure(LookAction);
 	EnhancedInputComp->BindAction(LookAction, ETriggerEvent::Triggered, this, &ASBCharacter::OnLook);
+}
+
+void ASBCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	ASBPlayerState* PS = GetPlayerState<ASBPlayerState>();
+	if (ensure(IsValid(PS)))
+	{
+		USBAbilitySystemComponent* ASC = Cast<USBAbilitySystemComponent>(PS->GetAbilitySystemComponent());
+		if (ensure(IsValid(PS)))
+		{
+			ASC->InitAbilityActorInfo(PS, this);
+		}
+	}
+}
+
+void ASBCharacter::OnRep_PlayerState()
+{
+	Super::OnRep_PlayerState();
+
+	ASBPlayerState* PS = GetPlayerState<ASBPlayerState>();
+	if (ensure(IsValid(PS)))
+	{
+		USBAbilitySystemComponent* ASC = Cast<USBAbilitySystemComponent>(PS->GetAbilitySystemComponent());
+		if (ensure(IsValid(PS)))
+		{
+			ASC->InitAbilityActorInfo(PS, this);
+		}
+	}
 }
 
 

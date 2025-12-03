@@ -32,6 +32,8 @@ public:
 
 protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* InPlayerInputComponent) override;
+	virtual void PossessedBy(AController* NewController) override;
+	virtual void OnRep_PlayerState() override;
 
 protected:
 	void OnMove(const struct FInputActionValue& InValue);
