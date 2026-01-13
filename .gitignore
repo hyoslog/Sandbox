@@ -73,3 +73,9 @@ Plugins/**/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+# Rider / JetBrains IDE settings
+.idea/
+
+# RiderLink Plugin (Unreal Engine)
+Plugins/Developer/RiderLink/
