@@ -27,8 +27,8 @@ public:
 	ASBCharacter();
 
 public:
-	class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
-	class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+	class USpringArmComponent* GetCameraBoom() const { return CameraBoomComponent; }
+	class UCameraComponent* GetFollowCamera() const { return FollowCameraComponent; }
 
 protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* InPlayerInputComponent) override;
@@ -44,22 +44,26 @@ protected:
 	virtual void DoLook(float Yaw, float Pitch);
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
-	class USpringArmComponent* CameraBoom = nullptr;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="SB|Components")
+	TObjectPtr<class USpringArmComponent> CameraBoomComponent = nullptr;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
-	class UCameraComponent* FollowCamera = nullptr;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="SB|Components")
+	TObjectPtr<class UCameraComponent> FollowCameraComponent = nullptr;
 
 protected:
-	UPROPERTY(EditAnywhere, Category="Input")
-	class UInputAction* JumpAction = nullptr;
+	UPROPERTY(EditAnywhere, Category="SB|Input")
+	TObjectPtr<class UInputAction> JumpAction = nullptr;
 
-	UPROPERTY(EditAnywhere, Category="Input")
-	class UInputAction* MoveAction = nullptr;
+	UPROPERTY(EditAnywhere, Category="SB|Input")
+	TObjectPtr<class UInputAction> MoveAction = nullptr;
 
-	UPROPERTY(EditAnywhere, Category="Input")
-	class UInputAction* LookAction = nullptr;
+	UPROPERTY(EditAnywhere, Category="SB|Input")
+	TObjectPtr<class UInputAction> LookAction = nullptr;
 
-	UPROPERTY(EditAnywhere, Category="Input")
-	class UInputAction* MouseLookAction = nullptr;
+	UPROPERTY(EditAnywhere, Category="SB|Input")
+	TObjectPtr<class UInputAction> MouseLookAction = nullptr;
+	
+protected:
+	UPROPERTY(EditAnywhere, Category="SB|Weapon")
+	FName WeaponSocket;
 };

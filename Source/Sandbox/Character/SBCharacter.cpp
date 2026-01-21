@@ -43,17 +43,17 @@ ASBCharacter::ASBCharacter()
 	CharMoveComp->BrakingDecelerationWalking = 2000.f;
 	CharMoveComp->BrakingDecelerationFalling = 1500.0f;
 
-	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
-	check(CameraBoom);
+	CameraBoomComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoomComponent"));
+	check(CameraBoomComponent);
 	check(RootComponent);
-	CameraBoom->SetupAttachment(RootComponent);
-	CameraBoom->TargetArmLength = 400.0f;
-	CameraBoom->bUsePawnControlRotation = true;
+	CameraBoomComponent->SetupAttachment(RootComponent);
+	CameraBoomComponent->TargetArmLength = 400.0f;
+	CameraBoomComponent->bUsePawnControlRotation = true;
 
-	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
-	check(FollowCamera);
-	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
-	FollowCamera->bUsePawnControlRotation = false;
+	FollowCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCameraComponent"));
+	check(FollowCameraComponent);
+	FollowCameraComponent->SetupAttachment(CameraBoomComponent, USpringArmComponent::SocketName);
+	FollowCameraComponent->bUsePawnControlRotation = false;
 }
 
 void ASBCharacter::SetupPlayerInputComponent(UInputComponent* InPlayerInputComponent)
