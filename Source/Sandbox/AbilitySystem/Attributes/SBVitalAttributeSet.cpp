@@ -10,3 +10,11 @@
 // Plugin
 
 // Game
+
+void USBVitalAttributeSet::OnRep_Health(const FGameplayAttributeData& InOldHealth)
+{
+}
+
+void USBVitalAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData& InOldHealth)
+{
+}

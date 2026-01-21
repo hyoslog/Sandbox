@@ -17,17 +17,26 @@
 // Generated
 #include "SBVitalAttributeSet.generated.h"
 
-/**
- * Getter, Setter, Init 함수 생성
- */
-#define SB_ATTRIBUTE_ACCESSORS(ClassName, PropertyName) \
-GAMEPLAYATTRIBUTE_PROPERTY_GETTER(ClassName, PropertyName) \
-GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName) \
-GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
-GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
-
 UCLASS()
 class USBVitalAttributeSet : public USBAttributeSet
 {
 	GENERATED_BODY()
+	
+private:
+	// 현재 체력
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Health, Category = "SB|Vital", Meta = (AllowPrivateAccess = true))
+	FGameplayAttributeData Health;
+	SB_ATTRIBUTE_ACCESSORS(USBVitalAttributeSet, Health);
+	
+	// 최대 체력
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxHealth, Category = "SB|Vital", Meta = (AllowPrivateAccess = true))
+	FGameplayAttributeData MaxHealth;
+	SB_ATTRIBUTE_ACCESSORS(USBVitalAttributeSet, MaxHealth);
+	
+protected:
+	UFUNCTION()
+	virtual void OnRep_Health(const FGameplayAttributeData& InOldHealth);
+	
+	UFUNCTION()
+	virtual void OnRep_MaxHealth(const FGameplayAttributeData& InOldHealth);
 };
