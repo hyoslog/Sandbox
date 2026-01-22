@@ -44,10 +44,10 @@ protected:
 	virtual void DoLook(float Yaw, float Pitch);
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="SB|Components")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="SB|Component")
 	TObjectPtr<class USpringArmComponent> CameraBoomComponent = nullptr;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="SB|Components")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="SB|Component")
 	TObjectPtr<class UCameraComponent> FollowCameraComponent = nullptr;
 
 protected:
