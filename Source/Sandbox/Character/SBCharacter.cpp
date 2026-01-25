@@ -19,6 +19,7 @@
 // Plugin
 
 // Game
+#include "ActorComponent/Equipment/SBEquipmentComponent.h"
 #include "Player/SBPlayerState.h"
 
 ASBCharacter::ASBCharacter()
@@ -54,6 +55,9 @@ ASBCharacter::ASBCharacter()
 	check(FollowCameraComponent);
 	FollowCameraComponent->SetupAttachment(CameraBoomComponent, USpringArmComponent::SocketName);
 	FollowCameraComponent->bUsePawnControlRotation = false;
+	
+	EquipmentComponent = CreateDefaultSubobject<USBEquipmentComponent>(TEXT("EquipmentComponent"));
+	check(EquipmentComponent);	
 }
 
 void ASBCharacter::SetupPlayerInputComponent(UInputComponent* InPlayerInputComponent)
@@ -94,6 +98,9 @@ void ASBCharacter::PossessedBy(AController* NewController)
 			ASC->InitAbilityActorInfo(PS, this);
 		}
 	}
+	
+	check(EquipmentComponent);
+	EquipmentComponent->EquipWeaon(WeaponKey, WeaponSocket);
 }
 
 void ASBCharacter::OnRep_PlayerState()

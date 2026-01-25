@@ -49,6 +49,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="SB|Component")
 	TObjectPtr<class UCameraComponent> FollowCameraComponent = nullptr;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="SB|Component")
+	TObjectPtr<class USBEquipmentComponent> EquipmentComponent = nullptr;
 
 protected:
 	UPROPERTY(EditAnywhere, Category="SB|Input")

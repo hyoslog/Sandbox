@@ -22,4 +22,7 @@ UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class SANDBOX_API USBEquipmentComponent : public USBActorComponent
 {
 	GENERATED_BODY()
+	
+public:
+	void EquipWeaon(const FPrimaryAssetId& InWeaponId, const FName& InWeaponAttachSocket);
 };
