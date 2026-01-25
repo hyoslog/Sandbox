@@ -64,6 +64,9 @@ protected:
 	TObjectPtr<class UInputAction> MouseLookAction = nullptr;
 	
 protected:
+	UPROPERTY(EditAnywhere, Category="SB|Weapon", meta = (AllowedTypes = "Weapon"))
+	FPrimaryAssetId WeaponKey;
+	
 	UPROPERTY(EditAnywhere, Category="SB|Weapon")
 	FName WeaponSocket;
 };

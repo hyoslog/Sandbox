@@ -18,7 +18,7 @@
 #include "SBActorComponent.generated.h"
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
-class SANDBOX_API USBActorComponent : public UActorComponent
+class USBActorComponent : public UActorComponent
 {
 	GENERATED_BODY()
 };
