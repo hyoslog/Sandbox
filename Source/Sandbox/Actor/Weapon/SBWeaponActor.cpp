@@ -20,3 +20,19 @@ ASBWeaponActor::ASBWeaponActor()
 	check(WeaponMeshComponent);
 	WeaponMeshComponent->SetupAttachment(SceneComponent);
 }
+
+void ASBWeaponActor::Initialize(const FPrimaryAssetId& InWeaponId, UStaticMesh* InNewMesh)
+{
+	WeaponId = InWeaponId;
+	
+	check(WeaponMeshComponent);
+	WeaponMeshComponent->SetStaticMesh(InNewMesh);
+	
+	// TODO: 충돌 채널 변경
+	WeaponMeshComponent->SetCollisionProfileName(TEXT("NoCollision"));
+}
+
+void ASBWeaponActor::Deinitialize()
+{
+	WeaponId = FPrimaryAssetId();
+}

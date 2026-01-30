@@ -23,7 +23,7 @@ class USBAssetManager : public UAssetManager
 	GENERATED_BODY()
 	
 public:
-	static UAssetManager& Get();
+	static USBAssetManager& Get();
 	
 public:
 	virtual void StartInitialLoading() override;

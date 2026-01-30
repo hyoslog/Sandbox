@@ -5,6 +5,8 @@
 
 #include "Actor/Weapon/SBWeaponActor.h"
 #include "Character/SBCharacter.h"
+#include "Data/DataAsset/WeaponDataAsset.h"
+#include "Manager/AssetManager/SBAssetManager.h"
 
 // ThirdParty
 
@@ -15,28 +17,67 @@
 // Game
 
 void USBEquipmentComponent::EquipWeaon(const FPrimaryAssetId& InWeaponId, const FName& InWeaponAttachSocket)
-{	
+{
+	USBAssetManager& AssetManager = USBAssetManager::Get();
+	
+	if (const auto* const WeaponData = Cast<USBWeaponDataAsset>(AssetManager.GetPrimaryAssetObject(InWeaponId)))
+	{
+		OnWeaponDataLoaded(InWeaponId);
+	}
+	else
+	{
+		AssetManager.LoadPrimaryAssets({InWeaponId}, 
+			TArray<FName>(), 
+			FStreamableDelegate::CreateUObject(this, &ThisClass::OnWeaponDataLoaded, InWeaponId)
+		);
+	}
+}
+
+void USBEquipmentComponent::OnWeaponDataLoaded(const FPrimaryAssetId InWeaponId)
+{
+	const UAssetManager& AssetManager = UAssetManager::Get();
+	
+	const auto* const WeaponData = Cast<USBWeaponDataAsset>(AssetManager.GetPrimaryAssetObject(InWeaponId));
+	check(WeaponData);
+
+	if (WeaponData->WeaponMesh.IsValid())
+	{
+		OnWeaponMeshLoaded(WeaponData);
+	}
+	else
+	{
+		AssetManager.GetStreamableManager().RequestAsyncLoad(
+			WeaponData->WeaponMesh.ToSoftObjectPath(),
+			FStreamableDelegate::CreateUObject(this, &ThisClass::OnWeaponMeshLoaded, WeaponData)
+		);
+	}
+}
+
+void USBEquipmentComponent::OnWeaponMeshLoaded(const USBWeaponDataAsset* const InDataAsset)
+{
+	check(InDataAsset);
+	
+	UWorld* World = GetWorld();
+	check(World);
+	
 	ASBCharacter* OwnerCharacter = Cast<ASBCharacter>(GetOwner());
 	if (IsValid(OwnerCharacter) == false)
 	{
 		ensure(false);
 		return;
 	}
+
+	UStaticMesh* LoadedMesh = InDataAsset->WeaponMesh.Get();
+	if (LoadedMesh == nullptr)
+	{
+		ensure(false);
+		return;
+	}
 	
-	UWorld* World = OwnerCharacter->GetWorld();
-	check(World);
-	
-	FActorSpawnParameters SpawnInfo;
-	SpawnInfo.Owner = OwnerCharacter;
-	SpawnInfo.Instigator = OwnerCharacter;
-	
-	ASBWeaponActor* NewWeaponActor = World->SpawnActor<ASBWeaponActor>(ASBWeaponActor::StaticClass(), SpawnInfo);
+	auto* NewWeaponActor = World->SpawnActorDeferred<ASBWeaponActor>(ASBWeaponActor::StaticClass(), FTransform::Identity, GetOwner());
 	check(NewWeaponActor);
 	
-	// 캐릭터 소켓에 부착
-	NewWeaponActor->AttachToComponent(
-		OwnerCharacter->GetMesh(), 
-		FAttachmentTransformRules::SnapToTargetNotIncludingScale, 
-		InWeaponAttachSocket
-	);
+	NewWeaponActor->Initialize(InDataAsset->GetPrimaryAssetId(), LoadedMesh);
+	NewWeaponActor->FinishSpawning(FTransform::Identity);
+	NewWeaponActor->AttachToComponent(OwnerCharacter->GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("hand_r"));
 }

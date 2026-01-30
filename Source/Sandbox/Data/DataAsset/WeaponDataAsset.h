@@ -22,13 +22,13 @@ class USBWeaponDataAsset : public UPrimaryDataAsset
 {
 	GENERATED_BODY()
 	
-protected:
+public:
 	virtual FPrimaryAssetId GetPrimaryAssetId() const override
 	{
 		return FPrimaryAssetId(TEXT("Weapon"), GetFName());
 	}
 	
-protected:	
+public:	
 	UPROPERTY(EditDefaultsOnly)
 	FText DisplayName;
 	

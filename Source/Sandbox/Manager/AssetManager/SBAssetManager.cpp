@@ -11,7 +11,7 @@
 
 // Game
 
-UAssetManager& USBAssetManager::Get(){
+USBAssetManager& USBAssetManager::Get(){
 	check(GEngine);
 
 	if (USBAssetManager* Singleton = Cast<USBAssetManager>(GEngine->AssetManager))

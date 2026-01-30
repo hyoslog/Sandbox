@@ -18,14 +18,22 @@
 #include "SBWeaponActor.generated.h"
 
 UCLASS()
-class SANDBOX_API ASBWeaponActor : public ASBActor
+class ASBWeaponActor : public ASBActor
 {
 	GENERATED_BODY()
 	
 public:
 	ASBWeaponActor();
 	
+public:
+	virtual void Initialize(const FPrimaryAssetId& InWeaponId, class UStaticMesh* InNewMesh);
+	virtual void Deinitialize();
+	
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="SB|Component")
 	TObjectPtr<UStaticMeshComponent> WeaponMeshComponent;
+	
+protected:
+	UPROPERTY(Transient)
+	FPrimaryAssetId WeaponId;
 };
